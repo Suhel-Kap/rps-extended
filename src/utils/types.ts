@@ -15,3 +15,23 @@ export type CreateGameType = {
     salt: string;
     stake: number;
 }
+
+export type ContractState = {
+    c1Hash?: string;
+    c2?: number;
+    stake?: bigint;
+    j1?: Address;
+    j2?: Address;
+    lastAction?: bigint;
+    TIMEOUT?: bigint;
+}
+
+export type GameState = {
+    contractAddress: Address;
+    player1: Address;
+    player2: Address;
+    player1Move?: Move;
+    player2Move?: Move;
+    salt?: string;
+    stake?: number;
+}

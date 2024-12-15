@@ -8,5 +8,4 @@ export const Moves = [
     Move.Lizard,
 ]
 
-export const CONTRACT_ADDRESS_KEY = 'contractAddress'
-export const SALT_KEY = 'salt'
+export const GAME_STATE_KEY = 'gameState'

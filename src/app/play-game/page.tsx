@@ -1,10 +1,9 @@
-import {GameContractAddressForm} from "@/components/PlayGame/GameContractAddressForm";
+import {PlayGameForm} from "@/components/PlayGame/PlayGameForm";
 
 export default function Page() {
     return (
         <div className={"p-3"}>
-            <h1 className="text-2xl font-semibold">Play Game</h1>
-            <GameContractAddressForm />
+            <PlayGameForm />
         </div>
     )
 }
