@@ -5,23 +5,25 @@ import {Address, formatEther} from "viem";
 import {useEffect, useState} from "react";
 import {usePlayer2Move} from "@/hooks/writeContract";
 
-export const Player2Move = ({address}: { address: Address }) => {
+export const Player2Move = ({address, refetchContractState}: { address: Address, refetchContractState: () => void}) => {
     const [move, setMove] = useState<Move | null>(null);
     const [isPending, setIsPending] = useState<boolean>(false);
 
     const {data: contractState} = useGetContractState(address);
-    const {mutateAsync, isError} = usePlayer2Move()
+    const {mutateAsync, isError} = usePlayer2Move();
 
     const handlePlayMove = async () => {
         if (!move) return;
-        setIsPending(true)
-        await mutateAsync(move)
-        setIsPending(false)
+        setIsPending(true);
+        await mutateAsync(move);
+        refetchContractState();
+        setIsPending(false);
     }
 
     useEffect(() => {
         if (isError) {
-            setIsPending(false)
+            setIsPending(false);
+            refetchContractState();
         }
     }, [isError])
 

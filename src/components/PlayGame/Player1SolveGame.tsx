@@ -4,7 +4,7 @@ import {useGetGameState} from "@/hooks/gameState";
 import {usePlayer1SolveGame} from "@/hooks/writeContract";
 import {Moves} from "@/utils/const";
 
-export const Player1SolveGame = () => {
+export const Player1SolveGame = ({refetchContractState}: { refetchContractState: () => void }) => {
     const {data: gameState} = useGetGameState();
     const {mutateAsync, isError} = usePlayer1SolveGame();
 
@@ -14,14 +14,16 @@ export const Player1SolveGame = () => {
 
     const handleSolveGame = async () => {
         if (!move || !salt) return;
-        setIsPending(true)
-        await mutateAsync({move, salt})
-        setIsPending(false)
+        setIsPending(true);
+        await mutateAsync({move, salt});
+        refetchContractState();
+        setIsPending(false);
     }
 
     useEffect(() => {
         if (isError) {
-            setIsPending(false)
+            setIsPending(false);
+            refetchContractState();
         }
     }, [isError])
 

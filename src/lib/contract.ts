@@ -16,7 +16,7 @@ import {ContractState} from "@/utils/types";
 const publicClient = createPublicClient({
     chain: sepolia,
     transport: http(ETH_SEPOLLIA_RPC),
-})
+});
 
 const createGame = async (walletClient: WalletClient, moveHash: string, stake: number, player2: Address) => {
     const hash = await walletClient.deployContract({
@@ -28,7 +28,7 @@ const createGame = async (walletClient: WalletClient, moveHash: string, stake: n
         chain: walletClient.chain,
     });
 
-    const receipt = await publicClient.waitForTransactionReceipt({hash})
+    const receipt = await publicClient.waitForTransactionReceipt({hash});
 
     return receipt.contractAddress;
 }
@@ -49,7 +49,7 @@ const simulatePlayGame = async (contractAddress: Address, player: Address, move:
 const playGame = async (walletClient: WalletClient, simulateContractResult: SimulateContractReturnType) => {
     const hash = await walletClient.writeContract(simulateContractResult.request as WriteContractParameters);
 
-    await publicClient.waitForTransactionReceipt({hash})
+    await publicClient.waitForTransactionReceipt({hash});
     return hash;
 }
 
@@ -66,7 +66,7 @@ const simulateSolveGame = async (contractAddress: Address, player: Address, move
 const solveGame = async (walletClient: WalletClient, simulateContractResult: SimulateContractReturnType) => {
     const hash = await walletClient.writeContract(simulateContractResult.request as WriteContractParameters);
 
-    await publicClient.waitForTransactionReceipt({hash})
+    await publicClient.waitForTransactionReceipt({hash});
     return hash;
 }
 
@@ -82,7 +82,7 @@ const simulateJ1Timeout = async (contractAddress: Address, player: Address) => {
 const j1Timeout = async (walletClient: WalletClient, simulateContractResult: SimulateContractReturnType) => {
     const hash = await walletClient.writeContract(simulateContractResult.request as WriteContractParameters);
 
-    await publicClient.waitForTransactionReceipt({hash})
+    await publicClient.waitForTransactionReceipt({hash});
     return hash;
 }
 
@@ -98,14 +98,14 @@ const simulateJ2Timeout = async (contractAddress: Address, player: Address) => {
 const j2Timeout = async (walletClient: WalletClient, simulateContractResult: SimulateContractReturnType) => {
     const hash = await walletClient.writeContract(simulateContractResult.request as WriteContractParameters);
 
-    await publicClient.waitForTransactionReceipt({hash})
+    await publicClient.waitForTransactionReceipt({hash});
     return hash;
 }
 
 const getContractByteCode = async (address: Address) => {
     return await publicClient.getCode({
         address
-    })
+    });
 }
 
 const isContractRpsls = async (address: Address) => {
@@ -150,7 +150,7 @@ const getContractState = async (address: Address) => {
                 functionName: 'TIMEOUT'
             },
         ]
-    })
+    });
 
     return {
         c1Hash: results[0].status === 'success' ? results[0].result : null,
@@ -168,11 +168,11 @@ const getContractStake = async (address: Address) => {
         address,
         abi: rpslsAbi,
         functionName: 'stake'
-    })
+    });
 }
 
 const getCurrentBlockTimestamp = async () => {
-    return await publicClient.getBlock().then(block => block.timestamp)
+    return await publicClient.getBlock().then(block => block.timestamp);
 }
 
 export {

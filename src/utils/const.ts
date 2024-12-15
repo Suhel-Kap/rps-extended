@@ -6,6 +6,6 @@ export const Moves = [
     Move.Scissors,
     Move.Spock,
     Move.Lizard,
-]
+];
 
-export const GAME_STATE_KEY = 'gameState'
+export const GAME_STATE_KEY = 'gameState';

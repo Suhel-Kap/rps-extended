@@ -1,20 +1,22 @@
 import {usePlayer1Timeout} from "@/hooks/writeContract";
 import {useEffect, useState} from "react";
 
-export const Player2Withdraw = ({timer}: { timer: number }) => {
+export const Player2Withdraw = ({timer, refetchContractState}: { timer: number, refetchContractState: () => void }) => {
     const [isPending, setIsPending] = useState<boolean>(false);
 
-    const {mutateAsync, isError} = usePlayer1Timeout()
+    const {mutateAsync, isError} = usePlayer1Timeout();
 
     const handleWithdraw = async () => {
-        setIsPending(true)
-        await mutateAsync()
-        setIsPending(false)
+        setIsPending(true);
+        await mutateAsync();
+        refetchContractState();
+        setIsPending(false);
     }
 
     useEffect(() => {
         if (isError) {
-            setIsPending(false)
+            setIsPending(false);
+            refetchContractState();
         }
     }, [isError])
 

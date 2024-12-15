@@ -12,7 +12,7 @@ export const useGetContractState = (address: Address | undefined) => {
         enabled: !!address,
         refetchOnWindowFocus: true,
         refetchOnMount: true,
-    })
+    });
 
     const errorMessage = error?.message || 'An error occurred';
 

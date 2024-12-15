@@ -13,9 +13,9 @@ const config = createConfig(getDefaultConfig({
     },
     walletConnectProjectId: WALLET_CONNECT_PROJECT_ID,
     appName: "Rock Paper Scissor Lizard Spock",
-}))
+}));
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 export const Web3Provider = ({children}: Readonly<{ children: React.ReactNode }>) => {
     return (

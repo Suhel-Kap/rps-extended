@@ -30,10 +30,13 @@ export const PlayGameForm = () => {
     const {data: gameState} = useGetGameState();
     const {mutate: setGameState} = useSetGameState();
 
-    const handleFetchGame = async () => {
+    const handleFetchGame = async (address: string) => {
+        console.log('fetching game', address, isAddress(address));
         if (!address || !isAddress(address)) {
             setError('Invalid address');
             return;
+        } else {
+            setError('');
         }
         const isRps = await isContractRpsls(address);
         setIsRpsContract(isRps);
@@ -42,19 +45,19 @@ export const PlayGameForm = () => {
 
     useEffect(() => {
         if (gameState) {
-            setAddress(gameState.contractAddress)
+            setAddress(gameState.contractAddress);
         }
     }, [gameState]);
 
     useEffect(() => {
-        if (contractState) {
+        if (contractState && address) {
             setGameState({
                 ...gameState,
-                contractAddress: address!,
+                contractAddress: address,
                 player1: contractState.j1!,
                 player2: contractState.j2!,
                 player2Move: Move[contractState?.c2 || 0] as unknown as Move,
-            })
+            });
 
             getCurrentBlockTimestamp().then((timestamp) => {
                 const timeLeft = contractState.lastAction! + contractState.TIMEOUT! - timestamp;
@@ -90,7 +93,7 @@ export const PlayGameForm = () => {
                         className="w-full px-3 py-2 border rounded-lg text-black placeholder:text-gray-500"
                     />
                     <button
-                        onClick={handleFetchGame}
+                        onClick={() => handleFetchGame(address!)}
                         disabled={isContractStateFetching || isContractStateLoading}
                         className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 mt-4"
                     >
@@ -114,9 +117,9 @@ export const PlayGameForm = () => {
                                 // eslint-disable-next-line
                                 contractState?.stake! > BigInt(0) ? (
                                     contractState?.c2 === Move.Null ? (
-                                        <Player2Move address={address!}/>
+                                        <Player2Move address={address!} refetchContractState={fetchContractState}/>
                                     ) : (
-                                        <Player2Withdraw timer={timer}/>
+                                        <Player2Withdraw timer={timer} refetchContractState={fetchContractState}/>
                                     )) : (
                                     <p>Game has ended</p>
                                 )}
@@ -128,9 +131,9 @@ export const PlayGameForm = () => {
                                 // eslint-disable-next-line
                                 contractState?.stake! > BigInt(0) ? (
                                     contractState?.c2 === Move.Null ? (
-                                        <Player1Withdraw/>
+                                        <Player1Withdraw refetchContractState={fetchContractState}/>
                                     ) : (
-                                        <Player1SolveGame/>
+                                        <Player1SolveGame refetchContractState={fetchContractState}/>
                                     )) : (
                                     <p>Game has ended</p>
                                 )}

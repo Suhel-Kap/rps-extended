@@ -18,11 +18,11 @@ export const CreateGameForm = () => {
         player2: null,
         salt: generateRandomSalt(),
         stake: 0
-    })
+    });
     const [error, setError] = useState<string>('');
-    const {isPending, mutate} = useCreateGame()
-    const {data: gameState} = useGetGameState()
-    const {data: contractState} = useGetContractState(gameState?.contractAddress);
+    const {isPending, mutateAsync} = useCreateGame();
+    const {data: gameState, refetch: refetchGameState} = useGetGameState();
+    const {data: contractState, refetch: refetchContractState} = useGetContractState(gameState?.contractAddress);
     const {isConnected} = useAccount();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -41,7 +41,9 @@ export const CreateGameForm = () => {
             return;
         }
         setError('');
-        mutate(form)
+        await mutateAsync(form);
+        refetchGameState();
+        refetchContractState()
     };
 
     const handleGenerateNewSalt = () => {
