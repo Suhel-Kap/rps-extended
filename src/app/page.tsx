@@ -1,11 +1,9 @@
-import {Title} from "@mantine/core";
+import {CreateOrPlay} from "@/components/Home/CreateOrPlay";
 
 export default function Home() {
-  return (
-    <div>
-      <Title order={1}>
-        Rock Paper Scissor Lizard Spock
-      </Title>
-    </div>
-  );
+    return (
+        <div>
+            <CreateOrPlay/>
+        </div>
+    );
 }

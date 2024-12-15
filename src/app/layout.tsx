@@ -1,6 +1,5 @@
 import type {Metadata} from "next";
 import "./globals.css";
-import {ColorSchemeScript, mantineHtmlProps, MantineProvider} from "@mantine/core";
 import {Web3Provider} from "@/providers/Web3Provider";
 import {Header} from "@/components/Header";
 
@@ -15,17 +14,12 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" {...mantineHtmlProps}>
-        <head>
-            <ColorSchemeScript/>
-        </head>
+        <html lang="en">
         <body>
-        <MantineProvider>
             <Web3Provider>
                 <Header />
                 {children}
             </Web3Provider>
-        </MantineProvider>
         </body>
         </html>
     );

@@ -1,4 +1,4 @@
-[
+export const rpslsAbi = [
   {
     "constant": true,
     "inputs": [
@@ -185,4 +185,4 @@
     "stateMutability": "payable",
     "type": "constructor"
   }
-]
+] as const;
