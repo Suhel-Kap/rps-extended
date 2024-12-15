@@ -99,13 +99,14 @@ export const PlayGameForm = () => {
                 </div>
             ) : (
                 <div>
-                    {timer > 0 ? (
-                        <p>Time left: {
-                            Math.floor(timer / 60).toString().padStart(2, '0') + ':' + (timer % 60).toString().padStart(2, '0')
-                        }</p>
-                    ) : (
-                        <p>Time is up!</p>
-                    )}
+                    {/*eslint-disable-next-line*/}
+                    {contractState?.stake! > BigInt(0) && (
+                        timer > 0 ? (
+                            <p>Time
+                                left: {Math.floor(timer / 60).toString().padStart(2, '0') + ':' + (timer % 60).toString().padStart(2, '0')}</p>
+                        ) : (
+                            <p>Time is up!</p>
+                        ))}
 
                     {contractState?.j2 === currentPlayerAddress && (
                         <div>
