@@ -31,7 +31,6 @@ export const PlayGameForm = () => {
     const {mutate: setGameState} = useSetGameState();
 
     const handleFetchGame = async (address: string) => {
-        console.log('fetching game', address, isAddress(address));
         if (!address || !isAddress(address)) {
             setError('Invalid address');
             return;
