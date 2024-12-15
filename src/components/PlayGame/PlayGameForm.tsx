@@ -29,6 +29,8 @@ export const PlayGameForm = () => {
 
     const {data: gameState} = useGetGameState();
     const {mutate: setGameState} = useSetGameState();
+    // eslint-disable-next-line
+    let isGameOver = contractState?.stake! > BigInt(0)
 
     const handleFetchGame = async (address: string) => {
         if (!address || !isAddress(address)) {
@@ -101,8 +103,7 @@ export const PlayGameForm = () => {
                 </div>
             ) : (
                 <div>
-                    {/*eslint-disable-next-line*/}
-                    {contractState?.stake! > BigInt(0) && (
+                    {isGameOver && (
                         timer > 0 ? (
                             <p>Time
                                 left: {Math.floor(timer / 60).toString().padStart(2, '0') + ':' + (timer % 60).toString().padStart(2, '0')}</p>
@@ -113,8 +114,7 @@ export const PlayGameForm = () => {
                     {contractState?.j2 === currentPlayerAddress && (
                         <div>
                             {
-                                // eslint-disable-next-line
-                                contractState?.stake! > BigInt(0) ? (
+                                isGameOver ? (
                                     contractState?.c2 === Move.Null ? (
                                         <Player2Move address={address!} refetchContractState={fetchContractState}/>
                                     ) : (
@@ -127,8 +127,7 @@ export const PlayGameForm = () => {
                     {contractState?.j1 === currentPlayerAddress && (
                         <div>
                             {
-                                // eslint-disable-next-line
-                                contractState?.stake! > BigInt(0) ? (
+                                isGameOver ? (
                                     contractState?.c2 === Move.Null ? (
                                         <Player1Withdraw refetchContractState={fetchContractState}/>
                                     ) : (

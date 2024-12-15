@@ -1,5 +1,5 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {GAME_STATE_KEY} from "@/utils/const";
+import {GAME_STATE_KEY, GET_GAME_STATE} from "@/utils/const";
 import {GameState} from "@/utils/types";
 
 export const useGetGameState = () => {
@@ -9,7 +9,7 @@ export const useGetGameState = () => {
             if (!localStorageGameState) return null;
             return JSON.parse(localStorageGameState) as GameState;
         },
-        queryKey: ['getGameState'],
+        queryKey: [GET_GAME_STATE],
     });
 }
 

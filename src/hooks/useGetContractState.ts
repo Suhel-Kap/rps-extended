@@ -8,10 +8,11 @@ export const useGetContractState = (address: Address | undefined) => {
             if (!address) return {};
             return await getContractState(address)
         },
-        queryKey: ['getContractState'],
+        queryKey: [address],
         enabled: !!address,
         refetchOnWindowFocus: true,
         refetchOnMount: true,
+        refetchInterval: 15000,
     });
 
     const errorMessage = error?.message || 'An error occurred';

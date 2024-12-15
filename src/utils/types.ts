@@ -11,7 +11,7 @@ export enum Move {
 
 export type CreateGameType = {
     player2: Address | null;
-    move: Move | null;
+    move: Move;
     salt: string;
     stake: number;
 }

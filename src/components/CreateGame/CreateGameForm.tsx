@@ -14,7 +14,7 @@ import {ConnectWalletToPlay} from "@/components/ConnectWalletToPlay";
 
 export const CreateGameForm = () => {
     const [form, setForm] = useState<CreateGameType>({
-        move: null,
+        move: Move.Null,
         player2: null,
         salt: generateRandomSalt(),
         stake: 0

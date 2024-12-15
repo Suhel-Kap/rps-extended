@@ -11,7 +11,7 @@ import {
     simulateSolveGame,
     solveGame
 } from "@/lib/contract";
-import {GAME_STATE_KEY} from "@/utils/const";
+import {GAME_STATE_KEY, GET_GAME_STATE} from "@/utils/const";
 import {SimulateContractReturnType} from "viem";
 
 export const useCreateGame = () => {
@@ -34,7 +34,7 @@ export const useCreateGame = () => {
         },
         onSuccess: data => {
             localStorage.setItem(GAME_STATE_KEY, JSON.stringify(data));
-            queryClient.invalidateQueries({queryKey: ['getGameState']}).then(() => console.log('invalidateQueries'), () => console.log('invalidateQueries error'));
+            queryClient.invalidateQueries({queryKey: [GET_GAME_STATE]}).then(() => console.log('invalidateQueries'), () => console.log('invalidateQueries error'));
         },
         onError: error => {
             console.log('onError', error);
@@ -59,7 +59,7 @@ export const usePlayer2Move = () => {
             await playGame(signer!, simulationResult as unknown as SimulateContractReturnType);
 
             localStorage.setItem(GAME_STATE_KEY, JSON.stringify(gameState));
-            queryClient.invalidateQueries({queryKey: ['getGameState']}).then(() => console.log('invalidateQueries'), () => console.log('invalidateQueries error'));
+            queryClient.invalidateQueries({queryKey: [GET_GAME_STATE]}).then(() => console.log('invalidateQueries'), () => console.log('invalidateQueries error'));
         },
         onError: error => {
             console.log('onError', error);
@@ -83,7 +83,7 @@ export const usePlayer1SolveGame = () => {
         },
         onSuccess: () => {
             localStorage.removeItem(GAME_STATE_KEY);
-            queryClient.invalidateQueries({queryKey: ['getContractState', 'getGameState']}).then(() => console.log('invalidateQueries'), () => console.log('invalidateQueries error'));
+            queryClient.invalidateQueries({queryKey: [GET_GAME_STATE]}).then(() => console.log('invalidateQueries'), () => console.log('invalidateQueries error'));
         },
         onError: error => {
             console.log('onError', error);

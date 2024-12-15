@@ -9,3 +9,4 @@ export const Moves = [
 ];
 
 export const GAME_STATE_KEY = 'gameState';
+export const GET_GAME_STATE = 'getGameState';
