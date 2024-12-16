@@ -40,6 +40,10 @@ export const PlayGameForm = () => {
             setError('');
         }
         const isRps = await isContractRpsls(address);
+        if (!isRps) {
+            setError('Invalid contract');
+            return;
+        }
         setIsRpsContract(isRps);
         fetchContractState();
     }
@@ -102,42 +106,50 @@ export const PlayGameForm = () => {
                     </button>
                 </div>
             ) : (
-                <div>
-                    {isGameOver && (
-                        timer > 0 ? (
-                            <p>Time
-                                left: {Math.floor(timer / 60).toString().padStart(2, '0') + ':' + (timer % 60).toString().padStart(2, '0')}</p>
-                        ) : (
-                            <p>Time is up!</p>
-                        ))}
+                <>
+                    {contractState?.j1 !== currentPlayerAddress && contractState?.j2 !== currentPlayerAddress ? (
+                        <p>You are not a player in this game</p>
+                    ) : (
+                        <div>
+                            {isGameOver && (
+                                timer > 0 ? (
+                                    <p>Time
+                                        left: {Math.floor(timer / 60).toString().padStart(2, '0') + ':' + (timer % 60).toString().padStart(2, '0')}</p>
+                                ) : (
+                                    <p>Time is up!</p>
+                                ))}
 
-                    {contractState?.j2 === currentPlayerAddress && (
-                        <div>
-                            {
-                                isGameOver ? (
-                                    contractState?.c2 === Move.Null ? (
-                                        <Player2Move address={address!} refetchContractState={fetchContractState}/>
-                                    ) : (
-                                        <Player2Withdraw timer={timer} refetchContractState={fetchContractState}/>
-                                    )) : (
-                                    <p>Game has ended</p>
-                                )}
+                            {contractState?.j2 === currentPlayerAddress && (
+                                <div>
+                                    {
+                                        isGameOver ? (
+                                            contractState?.c2 === Move.Null ? (
+                                                <Player2Move address={address!}
+                                                             refetchContractState={fetchContractState}/>
+                                            ) : (
+                                                <Player2Withdraw timer={timer}
+                                                                 refetchContractState={fetchContractState}/>
+                                            )) : (
+                                            <p>Game has ended</p>
+                                        )}
+                                </div>
+                            )}
+                            {contractState?.j1 === currentPlayerAddress && (
+                                <div>
+                                    {
+                                        isGameOver ? (
+                                            contractState?.c2 === Move.Null ? (
+                                                <Player1Withdraw refetchContractState={fetchContractState}/>
+                                            ) : (
+                                                <Player1SolveGame refetchContractState={fetchContractState}/>
+                                            )) : (
+                                            <p>Game has ended</p>
+                                        )}
+                                </div>
+                            )}
                         </div>
                     )}
-                    {contractState?.j1 === currentPlayerAddress && (
-                        <div>
-                            {
-                                isGameOver ? (
-                                    contractState?.c2 === Move.Null ? (
-                                        <Player1Withdraw refetchContractState={fetchContractState}/>
-                                    ) : (
-                                        <Player1SolveGame refetchContractState={fetchContractState}/>
-                                    )) : (
-                                    <p>Game has ended</p>
-                                )}
-                        </div>
-                    )}
-                </div>
+                </>
             )}
         </div>
     );
