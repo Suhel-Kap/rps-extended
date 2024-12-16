@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rock Paper Scissors Lizard Spock (RPSLS) Smart Contract Game
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project is a simple implementation of the Rock Paper Scissors Lizard Spock game using a smart contract on the Sepolia testnet.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Players can stake ETH, make their moves, and let the smart contract decide the winner based on predefined rules. The game is turn-based, with timeouts ensuring that players cannot stall indefinitely.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The frontend is built with NextJS and it uses Tanstack React Query for state management. It uses ConnectKit for wallet integration and viem for interacting with the smart contract.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Frontend Functionalities
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Create a Game:
+  - Input Player 2’s wallet address, stake amount, move, and random salt (auto-generated or custom).
+	-	Game details are stored in local storage, with prompts to save these externally.
+	-	After successful contract deployment, the contract address is displayed for sharing with Player 2.
+-	Play a Game:
+	-	Input the contract address or use a prefilled address from a previously created game.
+	-	Verify the contract’s validity using its runtime bytecode.
+	-	Fetch the game state (e.g., stake amount, player details, last action).
 
-## Learn More
+### Game Actions:
 
-To learn more about Next.js, take a look at the following resources:
+Based on the connected wallet’s role:
+-	Player 1: Solve the game or withdraw their stake.
+-	Player 2: Play their move or withdraw the full stake if Player 1 fails to reveal.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Features:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Random Salt Generation: To prevent move prediction, player 1's salt must be truly random. For this we use the browser's built-in crypto API to generate a random salt.
